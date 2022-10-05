@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const userSchema = mongoose.Schema({
+const saucesSchema = mongoose.Schema({
     userId: { type: String, required: true },
     name: { type: String, required: true },
     manufacturer: { type: String, required: true },
@@ -15,6 +15,6 @@ const userSchema = mongoose.Schema({
     usersDisliked: [{ type: String }],
 });
 
-userSchema.plugin(uniqueValidator);
+saucesSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('sauces', saucesSchema);

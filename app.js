@@ -1,11 +1,11 @@
 const express = require('express');
-const user = require('./models/user');
-const sauces = require('./models/sauce');
+const mongoose = require("mongoose");
 const app = express();
-const userRoutes = require('./routes/user');
-const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user.js');
+const saucesRoutes = require('./routes/sauces.js');
+const path = require('path');
 app.use(express.json());
-mongoose.connect('mongodb+srv://leila:<08061985tonneR.>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://leila:08061985@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -20,7 +20,8 @@ app.use((req, res, next) => {
 app.use((req, res) => {
     res.json({ message: 'Votre requête a bien été reçue !' });
 });
-app.use('/api/stuff', stuffRoutes);
+
 app.use('/api/auth', userRoutes);
+app.use("/api/sauces", saucesRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 module.exports = app;
-const mongoose = require('mongoose');

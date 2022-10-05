@@ -2,13 +2,9 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const user = require('../models/user');
-const userSchema = mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-
-userSchema.plugin(uniqueValidator);
+const User = require('../models/user.js');
+const userSchema = require('../routes/user.js');
+//userSchema.plugin(uniqueValidator);
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -46,4 +42,3 @@ exports.login = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-module.exports = mongoose.model('User', userSchema);
