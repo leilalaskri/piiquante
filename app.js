@@ -8,7 +8,7 @@ require('dotenv').config();
 app.use(express.json());
 const sqlUser = process.env.SQL_USER;
 const sqlPassword = process.env.SQL_PASSWORD;
-mongoose.connect('mongodb+srv://sqlUser:sqlPassword@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://sqlUser:sqlPassword@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
