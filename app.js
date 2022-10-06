@@ -4,8 +4,11 @@ const app = express();
 const userRoutes = require('./routes/user.js');
 const saucesRoutes = require('./routes/sauces.js');
 const path = require('path');
+require('dotenv').config();
 app.use(express.json());
-mongoose.connect('mongodb+srv://leila:08061985@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
+const sqlUser = process.env.SQL_USER;
+const sqlPassword = process.env.SQL_PASSWORD;
+mongoose.connect('mongodb+srv://sqlUser:sqlPassword@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
