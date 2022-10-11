@@ -6,14 +6,16 @@ const saucesRoutes = require('./routes/sauces.js');
 const path = require('path');
 require('dotenv').config();
 app.use(express.json());
-const sqlUser = process.env.SQL_USER;
-const sqlPassword = process.env.SQL_PASSWORD;
-mongoose.connect(`mongodb+srv://sqlUser:sqlPassword@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority`, {
+const mongoUser = process.env.MONGODB_USER;
+const mongoPassword = process.env.MONGODB_PASSWORD;
+mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.cltbshu.mongodb.net/?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+    .catch((error) => {
+        console.log('Connexion à MongoDB échouée !', error)
+    });
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -23,6 +25,7 @@ app.use((req, res, next) => {
 app.use((req, res) => {
     res.json({ message: 'Votre requête a bien été reçue !' });
 });
+
 
 app.use('/api/auth', userRoutes);
 app.use("/api/sauces", saucesRoutes);

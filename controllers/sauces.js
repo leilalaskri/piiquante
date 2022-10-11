@@ -14,12 +14,12 @@ exports.createsauces = (req, res, next) => {
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
         .catch(error => { res.status(400).json({ error }) })
 };
-exports.getOneSauce = (req, res, next) => {
-    Sauce.findOne({
+exports.getOneSauces = (req, res, next) => {
+    Sauces.findOne({
             _id: req.params.id,
         })
-        .then((sauce) => {
-            res.status(200).json(sauce);
+        .then((sauces) => {
+            res.status(200).json(sauces);
         })
         .catch((error) => {
             res.status(404).json({
@@ -67,7 +67,7 @@ exports.deletesauces = (req, res, next) => {
         });
 };
 exports.getAllSauces = (req, res, next) => {
-    Sauce.find()
+    Sauces.find()
         .then((sauces) => {
             res.status(200).json(sauces);
         })
