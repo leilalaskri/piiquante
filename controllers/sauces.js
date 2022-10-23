@@ -12,7 +12,7 @@ exports.createsauces = (req, res, next) => {
 
     sauce.save()
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
-        .catch(error => { res.status(400).json({ error }) })
+        .catch(error => { res.status(400).json({ message: "error" }) })
 };
 exports.getOnesauces = (req, res, next) => {
     sauces.findOne({
@@ -22,9 +22,7 @@ exports.getOnesauces = (req, res, next) => {
             res.status(200).json(sauces);
         })
         .catch((error) => {
-            res.status(404).json({
-                error: error,
-            });
+            res.status(404).json({ message: "error" });
         });
 };
 exports.modifysauces = (req, res, next) => {
@@ -34,7 +32,7 @@ exports.modifysauces = (req, res, next) => {
     } : {...req.body };
     sauces.updateOne({ _id: req.params.id }, {...saucesObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Objet modifié !' }))
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => res.status(400).json({ message: "error" }));
 };
 exports.deletesauces = (req, res, next) => {
     sauces.findOne({ _id: req.params.id })
@@ -43,10 +41,10 @@ exports.deletesauces = (req, res, next) => {
             fs.unlink(`images/${filename}`, () => {
                 sauces.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
-                    .catch(error => res.status(400).json({ error }));
+                    .catch(error => res.status(400).json({ message: "error" }));
             });
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => res.status(500).json({ message: "error" }));
 };
 exports.getAllSauces = (req, res, next) => {
     sauces.find()
@@ -54,8 +52,6 @@ exports.getAllSauces = (req, res, next) => {
             res.status(200).json(sauces);
         })
         .catch((error) => {
-            res.status(400).json({
-                error: error,
-            });
+            res.status(400).json({ message: "error" });
         });
 };
