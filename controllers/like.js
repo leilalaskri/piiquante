@@ -49,7 +49,9 @@ exports.addlikesOrdislikes = (req, res, next) => {
                         .catch((error) => res.status(400).json({ error }))
                 } else { res.status(401).json({ message: "utilisateur n'a pas liké ou disliké" }) }
             };
-
+            if ((req.body.likes != -1) || (req.body.likes != 1) || (req.body.likes != 0)) {
+                res.status(400).json({ message: "operation non autorisé" })
+            };
         })
-
+        .catch(error => res.status(500).json({ message: "error" }));
 }

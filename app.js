@@ -7,9 +7,10 @@ const rateLimit = require("express-rate-limit");
 const path = require('path');
 require('dotenv').config();
 const helmet = require("helmet");
+const mongoCluster = process.env.MONGODB_CLUSTER;
 const mongoUser = process.env.MONGODB_USER;
 const mongoPassword = process.env.MONGODB_PASSWORD;
-mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}@cluster0.cltbshu.mongodb.net/?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}${mongoCluster}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
