@@ -18,13 +18,14 @@ exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({
             _id: req.params.id,
         })
-        .then((sauces) => {
-            res.status(200).json(sauces);
+        .then((Sauce) => {
+            if (!Sauce) {
+                return res.status(404).json({ error: 'Il n\'existe pas de sauce avec cet identifiant' });
+            }
+            res.status(200).json(Sauce);
         })
-        .catch((error) => {
-            res.status(404).json({ message: "error" });
-        })
-        .catch(error => res.status(500).json({ message: "error" }));
+
+    .catch(error => res.status(500).json({ message: "error" }));
 };
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {
@@ -42,7 +43,7 @@ exports.deleteSauce = (req, res, next) => {
             fs.unlink(`images/${filename}`, () => {
                 Sauce.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
-                    .catch(error => res.status(400).json({ message: "error" }));
+
             });
         })
         .catch(error => res.status(500).json({ message: "error" }));
@@ -52,8 +53,6 @@ exports.getAllSauces = (req, res, next) => {
         .then((sauces) => {
             res.status(200).json(sauces);
         })
-        .catch((error) => {
-            res.status(400).json({ message: "error" });
-        })
-        .catch(error => res.status(500).json({ message: "error" }));
+
+    .catch(error => res.status(500).json({ message: "error" }));
 };

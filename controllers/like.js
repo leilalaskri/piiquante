@@ -17,8 +17,7 @@ exports.addlikesOrdislikes = (req, res, next) => {
                     .then(() => res.status(201).json({ message: "Objet modifié !" }))
                         .catch((error) => res.status(400).json({ error }))
                 } else { res.status(401).json({ message: "utilisateur a deja liké!" }) }
-            };
-            if (req.body.like == -1) {
+            } else if (req.body.like == -1) {
                 if ((!sauce.usersLiked.includes(req.body.userId)) && (!sauce.usersDisliked.includes(req.body.userId))) {
                     sauces.updateOne({ _id: req.params.id }, {
                             $push: { usersDisliked: req.body.userId },
@@ -27,9 +26,8 @@ exports.addlikesOrdislikes = (req, res, next) => {
                         })
                         .then(() => res.status(201).json({ message: "Objet modifié !" }))
                         .catch((error) => res.status(400).json({ error }))
-                } else { res.status(401).json({ message: "utilisateur a deja liké!" }) }
-            };
-            if (req.body.like == 0) {
+                } else { res.status(400).json({ message: "utilisateur a deja liké!" }) }
+            } else if (req.body.like == 0) {
                 /////////
                 if ((sauce.usersLiked.includes(req.body.userId))) {
                     sauces.updateOne({ _id: req.params.id }, {
@@ -48,10 +46,9 @@ exports.addlikesOrdislikes = (req, res, next) => {
                         .then(() => res.status(201).json({ message: "utilisateur a enlevé dislike " }))
                         .catch((error) => res.status(400).json({ error }))
                 } else { res.status(401).json({ message: "utilisateur n'a pas liké ou disliké" }) }
-            };
-            if ((req.body.likes != -1) || (req.body.likes != 1) || (req.body.likes != 0)) {
+            } else {
                 res.status(400).json({ message: "operation non autorisé" })
-            };
+            }
         })
         .catch(error => res.status(500).json({ message: "error" }));
 }
