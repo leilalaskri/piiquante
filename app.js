@@ -6,7 +6,8 @@ const saucesRoutes = require('./routes/sauces.js');
 const rateLimit = require("express-rate-limit");
 const path = require('path');
 require('dotenv').config();
-const helmet = require("helmet");
+app.use(express.json());
+//const helmet = require("helmet");
 const mongoCluster = process.env.MONGODB_CLUSTER;
 const mongoUser = process.env.MONGODB_USER;
 const mongoPassword = process.env.MONGODB_PASSWORD;
@@ -31,8 +32,8 @@ const limiter = rateLimit({
 
 //  Cette limite de 100 requêtes toutes les 10 minutes sera effective sur toutes les routes.
 app.use(limiter);
-app.use(helmet());
-app.use(express.json());
+//app.use(helmet());
+
 app.use('/api/auth', userRoutes);
 app.use("/api/sauces", saucesRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
